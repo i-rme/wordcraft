@@ -298,7 +298,7 @@ pub fn show(app: &mut WordApp, ui: &mut Ui) {
                             let resp = resp.on_hover_text(more);
                             egui::Popup::menu(&resp).show(|ui| {
                                 for (tab, shown) in left_out {
-                                    if ui.selectable_label(app.ui.tab == tab, shown).clicked() {
+                                    if ui.selectable_label(!app.ui.ribbon_collapsed && app.ui.tab == tab, shown).clicked() {
                                         let _ = app.run("ui.tab", json!({"tab": tab}));
                                         ui.close();
                                     }
