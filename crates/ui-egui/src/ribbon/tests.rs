@@ -483,8 +483,12 @@ fn tab_clicks_collapse_and_restore_the_ribbon() {
     assert_eq!(selected(&h, "Home"), Some(false));
 
     double_click(&mut h, "Layout");
-    assert!(h.state().ui.ribbon_collapsed);
-    assert_eq!(selected(&h, "Layout"), Some(false), "a double-click on a collapsed ribbon's tab leaves it minimized and unselected");
+    assert!(h.state().ui.ribbon_collapsed, "a double-click on an expanded ribbon's tab collapses it");
+    assert_eq!(h.state().ui.tab, "Layout");
+    // Starting collapsed: the first click opens the ribbon and the double-click closes it again.
+    double_click(&mut h, "Layout");
+    assert!(h.state().ui.ribbon_collapsed, "a double-click on a collapsed ribbon's tab leaves it minimized");
+    assert_eq!(selected(&h, "Layout"), Some(false), "and no tab is active");
     assert_eq!(h.state().ui.tab, "Layout");
 }
 
